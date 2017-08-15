@@ -1,6 +1,5 @@
 <?php
 
-require_once 'vendor/autoload.php';
 include_once 'addendum/annotations.php';
 include_once 'Annotations.php';
 
@@ -62,39 +61,5 @@ class Engine
         if(!isset($this->persistence[$class]))
             throw new Exception($class." not registered as Persistent Storage");
         return $this->persistence[$class];
-    }
-
-    public function run()
-    {
-        if(Engine::$DEBUG)
-        {
-            foreach (array_keys($_GET) as $key)
-            {
-                $_POST[$key] = $_GET[$key];
-            }
-        }
-
-        $ctx = explode(",", $_GET["args"]);
-        $matches = array();
-
-        $class = NULL;
-        if(isset($_GET["p"]) == false || strlen($_GET["p"]) <= 0 || $_GET["p"] == "Test.php")
-            $class = "Default";
-        else
-            $class = $_GET["p"];
-
-        $uri = "Controllers/".$class."Controller.php";
-
-        if(file_exists($uri) == false) {
-            header("Location: Error/404");
-            return;
-        }
-
-        $class = $class."Controller";
-
-        preg_match_all("/([^\/]+)/", $_SERVER["REQUEST_URI"], $matches);
-
-        $controller = new $class($matches[0]);
-        $controller->run($ctx);
     }
 }
