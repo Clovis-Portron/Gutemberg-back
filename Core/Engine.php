@@ -45,6 +45,11 @@ class Engine
     {
         $this->persistence = array();
         spl_autoload_register('Engine::autoload');
+        if(Engine::$DEBUG == true)
+        {
+            error_reporting(E_ALL);
+            ini_set('display_errors', 1);
+        }
     }
 
     public function setPersistence($storage)

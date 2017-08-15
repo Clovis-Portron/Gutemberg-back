@@ -283,7 +283,7 @@ class DatabaseStorage implements Storage
     public function findAll($class, &$destination, $condition="")
     {
         $destination = array();
-        $sql = "SELECT * from ".$class. " T";
+        $sql = "SELECT * from ".$class. "";
         if($condition != "")
         {
             $sql = $sql." WHERE ".$condition;
