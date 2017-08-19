@@ -27,6 +27,17 @@ class APIController
         return APIController::$Instance;
     }
 
+    private static function MakeTextSafe($text)
+    {
+        $text = str_replace('\'', "\\'", $text);
+        $text = str_replace("\"", '\\"', $text);
+        //$text = str_replace("<", "&lt;", $text);
+        //$text = str_replace(">", "&gt;", $text);
+        //$text = str_replace(",", "&#44;", $text);
+        $text = trim($text);
+        return $text;
+	}
+
     private static function MakePostSafe()
     {
         foreach ($_POST as $key => $value) {
@@ -35,7 +46,7 @@ class APIController
                 continue;
             } else {
                 $_POST[$key] = trim($_POST[$key]);
-                $_POST[$key] = View::MakeTextSafe($value);
+                $_POST[$key] = APIController::MakeTextSafe($value);
             }
         }
     }

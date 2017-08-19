@@ -82,6 +82,8 @@ class API
             $filters = json_decode($filters);
             foreach($filters as $key => $value)
             {
+		if($value == "null")
+			$value = null;
                 if(is_array($value))
                 {
                     for($i = 0; $i < count($value); $i++)
@@ -99,7 +101,12 @@ class API
                 }
                 else
                 {
-                    if(is_numeric($value))
+			if($value == null)
+			{
+				$f .= $key." IS NULL AND ";
+
+			}
+                    else if(is_numeric($value))
                     {
                         $f .= $key." = '".$value."' AND ";
                     }
